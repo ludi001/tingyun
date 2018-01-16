@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import actions from 'actions';
 import 'pages/functionalCom/header.css';
+import TimeDrag from 'pages/functionalCom/timeDrag.js';
 import { DatePicker, Select, Icon } from 'antd';
 const { RangePicker } = DatePicker;
 const Option = Select.Option;
@@ -82,8 +83,8 @@ class Header extends Component{
                             }                        
                             {
                                 slideFlag=='left' && 
-                                <div style={{height:'100px'}}>
-                                    选择时间段
+                                <div style={{height:'100px',paddingLeft:'30px',paddingTop:'25px'}}>
+                                    <TimeDrag/>
                                 </div>
                             }                       
                         </div>
