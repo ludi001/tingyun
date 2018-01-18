@@ -5,6 +5,7 @@ import actions from 'actions';
 import 'pages/Application/sw.css';
 import Header from 'pages/functionalCom/Header.js';
 import SortHeader from 'pages/functionalCom/SortHeader.js';
+import Sw_right from './sw_right.js';
 import { Icon } from 'antd';
 import SwChart from 'pages/chart/SwChart.js';
 import SwChart2 from 'pages/chart/SwChart2.js';
@@ -19,7 +20,7 @@ class Sw extends Component{
     }
     
     render() {
-    	let {showAdd}=this.props;
+    	let {showAdd,sw_display=false,show_sw,sw_back}=this.props;
         let tabData=['耗时百分比','响应时间','吞吐率','Apdex','错误率'];
         return (
             <div className='sw' id='sw'>
@@ -34,7 +35,7 @@ class Sw extends Component{
                                 {
                                     data.data.sw && data.data.sw.map((value)=>{
                                         return(
-                                            <li key={value.key} style={{marginBottom:'3px'}}>
+                                            <li key={value.key} style={{marginBottom:'3px'}} onClick={()=>show_sw()}>
                                                 <span style={{width:'165px',height:'22px',float:'left'}}>{value.name}</span>
                                                 <span style={{width:'50px',height:'22px',float:'right',textAlign:'center'}}>{value.rate}</span>
                                             </li>
@@ -44,18 +45,15 @@ class Sw extends Component{
                             </ul>
                         </div>
                         <div className='sw_content_right'>
+                            {
+                                sw_display && <Sw_right/>
+                            }
                             <div className='header'>
                                 <Icon type="question-circle" />
                                 <span> TOP5 最耗时事务(墙钟时间比)堆叠图</span>
                                 <span className='add' onClick={()=>showAdd()}><Icon type="plus-circle-o" /></span>
                             </div>
                             <SwChart />
-                            <div className='header'>
-                                <Icon type="question-circle" />
-                                <span> 事务响应时间和吞吐率</span>
-                                <span className='add' onClick={()=>showAdd()}><Icon type="plus-circle-o" /></span>
-                            </div>
-                            <SwChart2 />
                             <div className="sw_content_right_table">
                                 <div style={{margin: '20px'}}>
                                     <div><span style={{fontSize: '16px'}}>慢事务追踪列表 </span> <Icon type="question-circle" /></div>
@@ -104,7 +102,7 @@ class Sw extends Component{
 }
 const mapStateToProps = (state) => {
     return {
-        
+        sw_display: state.vars.sw_display 
     }
 };
 
@@ -119,7 +117,11 @@ const mapDispatchToProps = (dispatch) => {
     	},
         showAdd:()=>{
             dispatch(actions.setVars('addInstrument',true))
+        },
+        show_sw:()=>{
+            dispatch(actions.setVars('sw_display',true))
         }
+        
     }
 };
 

@@ -1,0 +1,52 @@
+@keyframes my_sjk
+{
+	from {left: 1000px;}
+	to {left: 0;}
+}
+
+@-moz-keyframes my_sjk /* Firefox */
+{
+	from {left: 1000px;}
+	to {left: 0;}
+}
+
+@-webkit-keyframes my_sjk /* Safari 和 Chrome */
+{
+	from {left: 1000px;}
+	to {left: 0;}
+}
+
+@-o-keyframes my_sjk /* Opera */
+{
+	from {left: 1000px;}
+	to {left: 0;}
+}
+.sjk_right{
+	padding: 10px 20px 20px;
+    width: 100%;
+    border-radius: 5px;
+    background: #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 5;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    min-height: 980px;
+    animation: my_sjk .5s;
+	-moz-animation: my_sjk .5s;	/* Firefox */
+	-webkit-animation: my_sjk .5s;	/* Safari 和 Chrome */
+	-o-animation: my_sjk .5s;	/* Opera */
+}
+.sjk_right .back{
+	color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 30px;
+    height: 30px;
+    width: 80px;
+    text-align: center;
+    background: #3598db;
+    margin-bottom: 20px;
+}

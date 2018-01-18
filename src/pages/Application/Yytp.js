@@ -38,9 +38,8 @@ class Yytp extends Component{
                                     <tr>
                                         <th>调用者</th>
                                         <th>被调用者</th>
-                                        <th>协议</th>
-                                        <th>响应时间</th>
-                                        <th>吞吐率</th>
+                                        <th>调用者类型</th>
+                                        <th>被调用者类型</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -52,7 +51,6 @@ class Yytp extends Component{
                                                     <td>{value.callee}</td>
                                                     <td>{value.protocol}</td>
                                                     <td>{value.time}</td>
-                                                    <td>{value.rate}</td>
                                                 </tr>
                                             )
                                         })

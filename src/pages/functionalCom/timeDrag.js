@@ -11,7 +11,7 @@ class TimeDrag extends Component{
         this.props.init();
     }
     render() {
-    	let {}=this.props;
+    	let {dragTime}=this.props;
         let arr=['30m','1H','6H','12H','1D','3D','7D','14D','1M','2M','3M'];
         return (
             <div id='dragDiv' className='dragDiv'>
@@ -41,14 +41,14 @@ class TimeDrag extends Component{
 }
 const mapStateToProps = (state) => {
     return {
-        
+        dragTime:state.vars.dragTime
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
     	willMount:()=>{
-    		console.log('willMount')
+    		
     	},
     	init:()=>{
     		function dragFunction(id,arr){
@@ -80,6 +80,7 @@ const mapDispatchToProps = (dispatch) => {
                         this.onmouseup = null; //预防鼠标弹起来后还会循环（即预防鼠标放上去的时候还会移动）  
                         //修复低版本ie bug 
                         console.log('time',arr[timeNum]) 
+                        dispatch(actions.setVars('dragTime',arr[timeNum]));
                         if(typeof dragBlock.releaseCapture!='undefined'){  
                             dragBlock.releaseCapture();  
                         }  

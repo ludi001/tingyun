@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 var Highcharts = require('react-highcharts');
 		
-class swChart2 extends Component{
+class SwChart2 extends Component{
 	render() {
     	let configPie = {
             chart: {
@@ -105,4 +105,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(swChart2);
+export default connect(mapStateToProps, mapDispatchToProps)(SwChart2);

@@ -202,7 +202,7 @@ const mapDispatchToProps = (dispatch) => {
     		$('#secondTree').css('height',height);
     	},
         showAdd:()=>{
-            dispatch(actions.setVars('addInstrument',true))
+            dispatch(actions.setVars('addInstrument',true));
         },
         iconAll:()=>{
             dispatch(actions.setVars('iconActive','all'))

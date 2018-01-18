@@ -61,23 +61,6 @@
 	line-height: 25px;
 	color: #3598DB;
 }
-.mq_content_left_input{
-	margin: 10px 0;
-}
-.mq_content_left_input input{
-	height: 26px;
-	width: 165px;
-}
-.mq_content_left_input span{
-	float: right;
-	height: 26px;
-	line-height: 26px;
-	text-align: center;
-	width: 50px;
-	background: #3598db;
-	color: #ffffff;
-	cursor: pointer;
-}
 .mq_content_right .header{
 	height: 35px;
 	line-height: 35px;

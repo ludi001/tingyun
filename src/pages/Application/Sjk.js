@@ -5,6 +5,7 @@ import actions from 'actions';
 import 'pages/Application/sjk.css';
 import Header from 'pages/functionalCom/Header.js';
 import SortHeader from 'pages/functionalCom/SortHeader.js';
+import Sjk_right from './sjk_right.js';
 import { Icon } from 'antd';
 import SwChart from 'pages/chart/SwChart.js';
 import SwChart2 from 'pages/chart/SwChart2.js';
@@ -19,7 +20,7 @@ class Sjk extends Component{
     }
     
     render() {
-    	let {showAdd}=this.props;
+    	let {showAdd,sjk_right=false,showRight}=this.props;
         let tabData=['SQL耗时','平均响应时间','吞吐率','事务响应时间','top'];
         return (
             <div className='sjk' id='sjk'>
@@ -34,7 +35,7 @@ class Sjk extends Component{
                                 {
                                     data.data.sw && data.data.sw.map((value)=>{
                                         return(
-                                            <li key={value.key} style={{marginBottom:'3px'}}>
+                                            <li key={value.key} style={{marginBottom:'3px'}} onClick={()=>showRight()}>
                                                 <span style={{width:'165px',height:'22px',float:'left'}}>{value.name}</span>
                                                 <span style={{width:'50px',height:'22px',float:'right',textAlign:'center'}}>{value.rate}</span>
                                             </li>
@@ -44,6 +45,9 @@ class Sjk extends Component{
                             </ul>
                         </div>
                         <div className='sjk_content_right'>
+                            {
+                                sjk_right && <Sjk_right />
+                            }
                             <div className='header'>
                                 <Icon type="question-circle" />
                                 <span> TOP5 最耗时事务(墙钟时间比)堆叠图</span>
@@ -100,7 +104,7 @@ class Sjk extends Component{
 }
 const mapStateToProps = (state) => {
     return {
-        
+        sjk_right:state.vars.sjk_right
     }
 };
 
@@ -115,6 +119,9 @@ const mapDispatchToProps = (dispatch) => {
     	},
         showAdd:()=>{
             dispatch(actions.setVars('addInstrument',true))
+        },
+        showRight:()=>{
+            dispatch(actions.setVars('sjk_right',true))
         }
     }
 };

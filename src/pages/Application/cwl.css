@@ -28,28 +28,11 @@
 	line-height: 25px;
 	color: #3598DB;
 }
-.cwl_content_left_input{
-	margin: 10px 0;
-}
 .cwl_content_right table thead tr th{
 	height: 30px;
 	background-color: #f2f2f2;
 	font-weight: normal;
 	padding-left: 10px;
-}
-.cwl_content_left_input input{
-	height: 26px;
-	width: 165px;
-}
-.cwl_content_left_input span{
-	float: right;
-	height: 26px;
-	line-height: 26px;
-	text-align: center;
-	width: 50px;
-	background: #3598db;
-	color: #ffffff;
-	cursor: pointer;
 }
 .cwl_content_right .header{
 	height: 35px;

@@ -5,6 +5,7 @@ import actions from 'actions';
 import 'pages/Application/nosql.css';
 import Header from 'pages/functionalCom/Header.js';
 import SortHeader from 'pages/functionalCom/SortHeader.js';
+import Nosql_right from './nosql_right.js';
 import { Icon } from 'antd';
 import SwChart from 'pages/chart/SwChart.js';
 import SwChart2 from 'pages/chart/SwChart2.js';
@@ -19,7 +20,7 @@ class NoSQL extends Component{
     }
     
     render() {
-    	let {showAdd}=this.props;
+    	let {showAdd,nosql_right=false,showRight}=this.props;
         let tabData=['操作总耗时','平均响应时间','吞吐率','top'];
         return (
             <div className='nosql' id='nosql'>
@@ -37,7 +38,7 @@ class NoSQL extends Component{
                                 {
                                     data.data.sw && data.data.sw.map((value)=>{
                                         return(
-                                            <li key={value.key} style={{marginBottom:'3px'}}>
+                                            <li key={value.key} style={{marginBottom:'3px'}} onClick={()=>showRight()}>
                                                 <span style={{width:'165px',height:'22px',float:'left'}}>{value.name}</span>
                                                 <span style={{width:'50px',height:'22px',float:'right',textAlign:'center'}}>{value.rate}</span>
                                             </li>
@@ -47,6 +48,7 @@ class NoSQL extends Component{
                             </ul>
                         </div>
                         <div className='nosql_content_right'>
+                            {nosql_right && <Nosql_right/>}
                             <div className='header'>
                                 <Icon type="question-circle" />
                                 <span> 最耗时Memcached操作堆叠图</span>
@@ -75,7 +77,7 @@ class NoSQL extends Component{
 }
 const mapStateToProps = (state) => {
     return {
-        
+        nosql_right:state.vars.nosql_right
     }
 };
 
@@ -90,6 +92,9 @@ const mapDispatchToProps = (dispatch) => {
     	},
         showAdd:()=>{
             dispatch(actions.setVars('addInstrument',true))
+        },
+        showRight:()=>{
+            dispatch(actions.setVars('nosql_right',true))
         }
     }
 };

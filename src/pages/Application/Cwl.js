@@ -27,20 +27,7 @@ class Cwl extends Component{
                     <div><span>显示top20 </span><input type='checkbox' /></div>
                     <div className='cwl_content'>
                         <div className='cwl_content_left'>
-                            <div className='cwl_content_left_titlt'>错误一览</div>
-                            <div className='cwl_content_left_input'><input/><span>搜索</span></div>
-                            <ul style={{width:'100%',listStyle:'none',padding:'0'}}>
-                                {
-                                    data.data.sw && data.data.sw.map((value)=>{
-                                        return(
-                                            <li key={value.key} style={{marginBottom:'3px'}}>
-                                                <span style={{width:'165px',height:'22px',float:'left'}}>{value.name}</span>
-                                                <span style={{width:'50px',height:'22px',float:'right',textAlign:'center'}}>{value.rate}</span>
-                                            </li>
-                                        )
-                                    })
-                                }                                
-                            </ul>
+                            <div className='cwl_content_left_titlt'>错误一览</div>                            
                         </div>
                         <div className='cwl_content_right'>
                             <div className='header'>

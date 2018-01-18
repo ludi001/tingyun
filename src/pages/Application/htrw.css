@@ -28,9 +28,6 @@
 	line-height: 25px;
 	color: #3598DB;
 }
-.htrw_content_left_input{
-	margin: 10px 0;
-}
 .htrw_content_right .searchBox{
 	height: 30px;
 	margin: 15px 0;
@@ -56,20 +53,6 @@
 	color: #f3f3f3;
 	font-weight: normal;
 	padding-left: 10px;
-}
-.htrw_content_left_input input{
-	height: 26px;
-	width: 165px;
-}
-.htrw_content_left_input span{
-	float: right;
-	height: 26px;
-	line-height: 26px;
-	text-align: center;
-	width: 50px;
-	background: #3598db;
-	color: #ffffff;
-	cursor: pointer;
 }
 .htrw_content_right .header{
 	height: 35px;

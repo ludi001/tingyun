@@ -10,6 +10,7 @@ class Yysz extends Component {
         this.props.init();
     }    
     render() {
+        let {}=this.props;
         return (
             <div className='yysz' id='yysz'>
                 <Header optionData={'more'} />

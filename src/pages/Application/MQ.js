@@ -39,19 +39,6 @@ class MQ extends Component{
                     	</div>
                         <div className='mq_content_left'>
                             <div className='mq_content_left_titlt'>MQ一览</div>
-                            <div className='mq_content_left_input'><input/><span>搜索</span></div>
-                            <ul style={{width:'100%',listStyle:'none',padding:'0'}}>
-                                {
-                                    data.data.sw && data.data.sw.map((value)=>{
-                                        return(
-                                            <li key={value.key} style={{marginBottom:'3px'}}>
-                                                <span style={{width:'165px',height:'22px',float:'left'}}>{value.name}</span>
-                                                <span style={{width:'50px',height:'22px',float:'right',textAlign:'center'}}>{value.rate}</span>
-                                            </li>
-                                        )
-                                    })
-                                }                                
-                            </ul>
                         </div>
                         <div className='mq_content_right'>
                             <div className='header'>

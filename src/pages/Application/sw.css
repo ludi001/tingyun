@@ -19,9 +19,17 @@
 	float: left;
 	width: 23%;
 }
+.sw_content_left ul li{
+	height: 22px;
+	cursor: pointer;
+}
+.sw_content_left ul li:hover{
+	border:1px solid #4791c8;
+}
 .sw_content_right{
 	float: right;
 	width: 75%;
+	position: relative;
 }
 .sw_content_left_titlt{
 	height: 25px;
