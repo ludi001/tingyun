@@ -4,10 +4,21 @@ import {connect} from 'react-redux';
 import actions from 'actions';
 import 'pages/Overview/yyyl.css';
 import data from './data.js';//假数据
+import TimeDrag from 'pages/functionalCom/timeDrag.js';
+import { DatePicker, Icon } from 'antd';
+const { RangePicker } = DatePicker;
+import myAjax from 'pages/functionalCom/myAjax.js';
+const ajax=myAjax.myAjax;
  
 class Yyyl extends Component{
+    componentDidMount() {
+        this.props.init();
+    }
+    componentWillMount() {
+        this.props.willMount();
+    }
     render() {
-        let {allTabYyyl,alarmTabYyyl,seriousTabYyyl,alarmFlagYyyl='allTab'}=this.props;
+        let {allTabYyyl,alarmTabYyyl,seriousTabYyyl,alarmFlagYyyl='allTab',showSlideFlag=false,showSlide,slide,slideFlag='left'}=this.props;
         return (
             <div className='content'>
             	<div className='header'>
@@ -16,7 +27,39 @@ class Yyyl extends Component{
             			<span className='oneSection'>分组筛选: </span>
             			<span className='twoSection'>全部</span>
             			<input className='threeSection' />
-            			<span className='fourSection'>最近30分钟</span>
+            			<span className='fourSection' onClick={()=>showSlide(showSlideFlag)}>最近30分钟<Icon type="caret-down" /></span>
+                        {
+                            showSlideFlag && <div className='timeCom'>
+                                <div className='title'>
+                                    <span>选择时间</span><span onClick={()=>showSlide(showSlideFlag)} className='close'></span>
+                                </div>
+                                <div className='slide'>
+                                    <span>指定时间</span>
+                                    <span className='big' onClick={()=>slide(slideFlag)}>
+                                        <span className={slideFlag=='left' ? 'left':'right'}></span>
+                                    </span>
+                                    <span>最近</span>
+                                </div>
+                                {
+                                    slideFlag=='right' && 
+                                    <div style={{height:'350px'}}>
+                                        <RangePicker
+                                          showTime={{ format: 'HH:mm' }}
+                                          format="YYYY-MM-DD HH:mm"
+                                          placeholder={['开始时间', '结束时间']}
+                                          onChange={this.onChange}
+                                          onOk={this.onOk}>
+                                        </RangePicker>
+                                    </div>
+                                }                        
+                                {
+                                    slideFlag=='left' && 
+                                    <div style={{height:'100px',paddingLeft:'30px',paddingTop:'25px'}}>
+                                        <TimeDrag/>
+                                    </div>
+                                }                       
+                            </div>
+                        }
             		</div>
 				</div>
 				<table cellSpacing="0" cellPadding='0' width='100%'>
@@ -80,12 +123,29 @@ class Yyyl extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        alarmFlagYyyl : state.vars.alarmFlagYyyl
+        alarmFlagYyyl : state.vars.alarmFlagYyyl,
+        slideFlag:state.vars.slideFlag,
+        showSlideFlag:state.vars.showSlideFlag
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        willMount:()=>{
+            let obj={
+                type: 'get',
+                url: 'apm/apmApplicationInfo.pinpoint' ,
+                data: '' ,
+                dataType: 'json'
+            };
+            ajax(obj,callback);
+            function callback(data){
+                console.log(data)
+            }
+        },
+        init:()=>{
+            
+        },
         seriousTabYyyl:()=>{            
             dispatch(actions.setVars('alarmFlagYyyl','seriousTab'))
         },
@@ -94,6 +154,16 @@ const mapDispatchToProps = (dispatch) => {
         },
         allTabYyyl:()=>{            
             dispatch(actions.setVars('alarmFlagYyyl','allTab'))
+        },
+        slide:(slideFlag)=>{
+            if(slideFlag=='left'){
+                dispatch(actions.setVars('slideFlag','right'))
+            }else{
+                dispatch(actions.setVars('slideFlag','left'))
+            }
+        },
+        showSlide:(showSlideFlag)=>{
+            dispatch(actions.setVars('showSlideFlag',!showSlideFlag))
         }
     }
 };

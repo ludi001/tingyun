@@ -28,8 +28,11 @@
     line-height: 24px;
     margin-right: 20px;
     cursor: pointer;
+    border-radius: 2px;
 }
-.sortHeader ul li:hover{
-	border-radius: 2px;
+.sortHeader ul li.active{
+	background: #00498d;
+}
+.sortHeader ul li:hover{	
     background: #00498d;
 }

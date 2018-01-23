@@ -104,10 +104,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
     	willMount:()=>{
-    		console.log('willMount')
+    		
     	},
     	init:()=>{
-    		console.log('init')
+    		
     	},
     	handleChange:(value)=>{
     		console.log(`${value}`);

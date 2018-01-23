@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import actions from 'actions';
 import 'pages/functionalCom/sortHeader.css';
 
 class SortHeader extends Component{  
@@ -7,11 +8,12 @@ class SortHeader extends Component{
         this.props.willMount();
     }
     componentDidMount() {
-        this.props.init();
+        let {tabData}=this.props;
+        this.props.init(tabData);
     }
     
     render() {
-    	let {tabData}=this.props;
+    	let {tabData,sort,active}=this.props;
         return (
         	<div className='sortHeader'>
                 <span className='sortHeader_title'>排序:</span>
@@ -24,7 +26,7 @@ class SortHeader extends Component{
 	                                )
                                 }else{
                                 	return(
-	                                    <li key={value}>{value}</li>
+	                                    <li className={active==value ? 'active':''} onClick={()=>sort(value)} key={value}>{value}</li>
 	                                )
                                 }                                    
                             })
@@ -38,7 +40,7 @@ class SortHeader extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        
+        active:state.vars.active
     }
 };
 
@@ -47,9 +49,12 @@ const mapDispatchToProps = (dispatch) => {
     	willMount:()=>{
     		
     	},
-    	init:()=>{
-    		
-    	}
+    	init:(tabData)=>{
+    		dispatch(actions.setVars('active',tabData[0]))
+    	},
+        sort:(value)=>{
+            dispatch(actions.setVars('active',value))
+        }
     }
 };
 

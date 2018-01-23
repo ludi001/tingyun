@@ -14,8 +14,22 @@ class Gjswyl extends Component{
                     <div className='header'>
                     	<div>关键事务列表(最近30分钟)</div>
                     	<input />
-
                     </div>
+                    <table style={{width:'100%'}}>
+                        <thead>
+                            <tr>
+                                <th>警报状态</th>
+                                <th>关键事务名称</th>
+                                <th>所属应用名称</th>
+                                <th>响应时间（ms）</th>
+                                <th>调用次数</th>
+                                <th>错误率（%）</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
                     <div className='browse'>
                         <div className='title'>最近事件一览(最近2周)</div>
                         <ul>
