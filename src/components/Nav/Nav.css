@@ -34,3 +34,14 @@ ul.firstTree{
 	color: #666666;
 	font-size: 14px;
 }
+.bodyHeader .alarm{
+	float: right;
+	height: 80px;
+	width: 100px;
+	text-align: center;
+	line-height: 80px;
+	font-size: 14px;
+	margin-right: 30px;
+	color: #ffffff;
+	cursor: pointer;
+}

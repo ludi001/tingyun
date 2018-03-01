@@ -107,6 +107,9 @@
     padding-left: 5px;
     border-bottom: #ddd 1px solid;
 }
+.sw_content_right_table table tbody tr{
+	cursor:pointer;
+}
 .sw_content_right_table table tbody tr:nth-child(even){
 	background-color: #f6f6f6;
 }

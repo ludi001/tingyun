@@ -19,7 +19,7 @@ class Qbhz extends Component{
         this.props.init();
     }    
     render() {
-    	let {showAdd,iconActive='all',iconAll,iconWarn,iconExclama}=this.props;
+    	let {showAdd,iconActive='all',iconAll,iconWarn,iconExclama,show_slow}=this.props;
         return (
             <div className='qbhz' id='qbhz'>
                 <Header headerFlag={true} optionData={'more'} />
@@ -143,7 +143,7 @@ class Qbhz extends Component{
                                         {
                                             data.data.qbhz2.map((value)=>{
                                                 return(
-                                                    <tr key={value.time}>
+                                                    <tr key={value.time} onClick={()=>show_slow()}>
                                                         <td style={{width:'40%'}}>{value.time}</td>
                                                         <td style={{width:'20%'}}>{value.affair}</td>
                                                         <td style={{width:'40%'}}>{value.response}</td>
@@ -212,6 +212,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         iconExclama:()=>{
             dispatch(actions.setVars('iconActive','exclamation'))
+        },
+        show_slow:()=>{
+            dispatch(actions.setVars('slowTransition',true))
         }
     }
 };

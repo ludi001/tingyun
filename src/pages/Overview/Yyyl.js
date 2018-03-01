@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import actions from 'actions';
 import 'pages/Overview/yyyl.css';
-import data from './data.js';//假数据
 import TimeDrag from 'pages/functionalCom/timeDrag.js';
 import { DatePicker, Icon } from 'antd';
 const { RangePicker } = DatePicker;
@@ -18,7 +17,7 @@ class Yyyl extends Component{
         this.props.willMount();
     }
     render() {
-        let {allTabYyyl,alarmTabYyyl,seriousTabYyyl,alarmFlagYyyl='allTab',showSlideFlag=false,showSlide,slide,slideFlag='left'}=this.props;
+        let {yyylList,allTabYyyl,alarmTabYyyl,seriousTabYyyl,alarmFlagYyyl='allTab',showSlideFlag=false,showSlide,slide,slideFlag='left'}=this.props;
         return (
             <div className='content'>
             	<div className='header'>
@@ -62,7 +61,7 @@ class Yyyl extends Component{
                         }
             		</div>
 				</div>
-				<table cellSpacing="0" cellPadding='0' width='100%'>
+				<table className='yyyl_table' cellSpacing="0" cellPadding='0' width='100%'>
 					<thead>
 						<tr>
 							<th width='55%'></th>
@@ -74,14 +73,14 @@ class Yyyl extends Component{
 					</thead>
                     <tbody>
                         {
-                            data.data.yyyl.map((value)=>{
+                            yyylList && yyylList.map((value)=>{
                                 return(
-                                    <tr key={value.name}>
-                                        <td width='55%'><div>{value.name}</div></td>
-                                        <td><div>{value.time}</div></td>
-                                        <td><div>{value.Apdex}</div></td>
-                                        <td><div>{value.erro}</div></td>
-                                        <td><div>{value.throughput}</div></td>
+                                    <tr key={value.appId}>
+                                        <td width='55%'><div>{value.applicationName}</div></td>
+                                        <td><div>{value.responseTime}</div></td>
+                                        <td><div>{value.apdex}</div></td>
+                                        <td><div>{value.errPercentage}</div></td>
+                                        <td><div>{value.rpm}</div></td>
                                     </tr>
                                 )
                             })
@@ -124,8 +123,9 @@ class Yyyl extends Component{
 const mapStateToProps = (state) => {
     return {
         alarmFlagYyyl : state.vars.alarmFlagYyyl,
-        slideFlag:state.vars.slideFlag,
-        showSlideFlag:state.vars.showSlideFlag
+        slideFlag : state.vars.slideFlag,
+        showSlideFlag : state.vars.showSlideFlag,
+        yyylList : state.vars.yyylList
     }
 };
 
@@ -141,6 +141,7 @@ const mapDispatchToProps = (dispatch) => {
             ajax(obj,callback);
             function callback(data){
                 console.log(data)
+                dispatch(actions.setVars('yyylList',data.objectList))
             }
         },
         init:()=>{

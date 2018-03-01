@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 var Highcharts = require('react-highcharts');
 		
-class SwChart extends Component{
+class SwChart extends Component{	
 	render() {
+		let {swChartData}=this.props;
     	let configPie = {
             chart: {
-	            type: 'areaspline',
+	            type: 'column',
 	            height:300,
 	        },
 	        title: {
@@ -27,16 +28,10 @@ class SwChart extends Component{
                 },
 	        },
 	        xAxis: {//x坐标
-	            categories: ['10.00','10.01','10.02','10.03','10.04','10.05','10.06','10.07','10.08'],
-	            tickLength: 0,
-	            tickmarkPlacement: 'on',
-	            startOnTick :false,
-	            gridLineWidth: 1,
-	            gridLineDashStyle: 'longdash',
+	            categories: swChartData ? swChartData.tranName:'',
 	            min:0,
 	        },
 	        yAxis: {
-	        	gridLineDashStyle: 'longdash',
 	            title: {
 	                text: '(秒)',
 	                align:'high',
@@ -61,11 +56,14 @@ class SwChart extends Component{
 	            
 	        },
 	        series: [{
-	            name: 'custom/wordpress',
-	            data: [278,17,16, 8, 0, 5, 2, 1, 3]
+	            name: '最小值',
+	            data: swChartData ? swChartData.minTime:''
 	        },{
-	            name: '首页',
-	            data: [156, 3, 4, 3, 2, 5, 2, 1, 3]
+	            name: '平均值',
+	            data: swChartData ? swChartData.avgTime:''
+	        },{
+	            name: '最大值',
+	            data: swChartData ? swChartData.maxTime:''
 	        }]
         }
         return (

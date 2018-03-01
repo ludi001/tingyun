@@ -124,6 +124,25 @@ module.exports={
 					name:'关键事务设置'
 				}
 			]
+		},{
+			id:'5',
+			url:'/server/alarm/jbsz',
+			name:'警告',
+			sonPage:[
+				{
+					id:'jbsz',
+					url:'/server/alarm/jbsz',
+					name:'警报设置'
+				},{
+					id:'clsz',
+					url:'/server/alarm/clsz',
+					name:'策略设置',
+				},{
+					id:'jstd',
+					url:'/server/alarm/jstd',
+					name:'接收通道'
+				}
+			]
 		}
 	]
 }

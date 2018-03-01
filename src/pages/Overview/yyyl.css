@@ -109,30 +109,30 @@
     margin-top: 8px;
     cursor: pointer;
 }
-.content table{
+.content .yyyl_table{
 	margin-top: 10px;
 	margin-bottom: 15px;
 }
-.content table thead{
+.content .yyyl_table thead{
 	width: 100%;
 	background-color: #f8f8f8; 
 }
-.content table thead tr th{
+.content .yyyl_table thead tr th{
 	height: 30px;
 	border-bottom: 1px solid #dddddd;
 	text-align: center;
 }
-.content table tbody tr td div{
+.content .yyyl_table tbody tr td div{
 	height: 40px;
 	line-height: 40px;
 	margin: 2px 0;
 	background-color: #eee;
 }
-.content table tbody tr td{
+.content .yyyl_table tbody tr td{
 	height: 44px;
 	text-align: center;
 }
-.content table tfoot tr td{
+.content .yyyl_table tfoot tr td{
 	height: 44px;
 	line-height: 44px;
 	text-align: center;

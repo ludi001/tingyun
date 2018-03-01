@@ -9,18 +9,19 @@ import Sjk_right from './sjk_right.js';
 import { Icon } from 'antd';
 import SwChart from 'pages/chart/SwChart.js';
 import SwChart2 from 'pages/chart/SwChart2.js';
-import data from './data.js';
+import myAjax from 'pages/functionalCom/myAjax.js';
+const ajax=myAjax.myAjax;
 
 class Sjk extends Component{  
 	componentWillMount() {
-        this.props.willMount();
+        this.props.willMount(this.props.headerOptionsID);
     }
     componentDidMount() {
         this.props.init();
     }
     
     render() {
-    	let {showAdd,sjk_right=false,showRight}=this.props;
+    	let {showAdd,sjk_right=false,showRight,sjkList,sjk_slowSql,sjk_top}=this.props;
         let tabData=['SQL耗时','平均响应时间','吞吐率','事务响应时间','top'];
         return (
             <div className='sjk' id='sjk'>
@@ -33,11 +34,11 @@ class Sjk extends Component{
                             <div className='sjk_content_left_input'><input/><span>搜索</span></div>
                             <ul style={{width:'100%',listStyle:'none',padding:'0'}}>
                                 {
-                                    data.data.sw && data.data.sw.map((value)=>{
+                                    sjkList && sjkList.map((value)=>{
                                         return(
-                                            <li key={value.key} style={{marginBottom:'3px'}} onClick={()=>showRight()}>
-                                                <span style={{width:'165px',height:'22px',float:'left'}}>{value.name}</span>
-                                                <span style={{width:'50px',height:'22px',float:'right',textAlign:'center'}}>{value.rate}</span>
+                                            <li key={value.sqlId} style={{marginBottom:'3px'}} onClick={()=>showRight(value.sqlId)}>
+                                                <span style={{width:'165px',height:'22px',float:'left'}}>{value.rpc}</span>
+                                                <span style={{width:'50px',height:'22px',float:'right',textAlign:'center'}}>{value.totalTime}</span>
                                             </li>
                                         )
                                     })
@@ -53,10 +54,10 @@ class Sjk extends Component{
                                 <span> TOP5 最耗时事务(墙钟时间比)堆叠图</span>
                                 <span className='add' onClick={()=>showAdd()}><Icon type="plus-circle-o" /></span>
                             </div>
-                            <SwChart />
+                            <SwChart swChartData={sjk_top} />
                             <div className='header'>
                                 <Icon type="question-circle" />
-                                <span> 事务响应时间和吞吐率</span>
+                                <span> 数据库响应时间曲线图</span>
                                 <span className='add' onClick={()=>showAdd()}><Icon type="plus-circle-o" /></span>
                             </div>
                             <SwChart2 />
@@ -80,12 +81,12 @@ class Sjk extends Component{
                                         </thead>
                                         <tbody>
                                             {
-                                                data.data.sw2.map((value)=>{
+                                                sjk_slowSql && sjk_slowSql.map((value)=>{
                                                     return(
-                                                        <tr key={value.order}>
-                                                            <td>{value.time}</td>
-                                                            <td>{value.affair}</td>
-                                                            <td>{value.response}</td>
+                                                        <tr key={value.dataBaseSqlViewVO.sqlId}>
+                                                            <td>{value.dataBaseSqlViewVO.sqlInfo}</td>
+                                                            <td>{value.invokeTime}</td>
+                                                            <td>{value.avgTime}</td>
                                                         </tr>
                                                     )
                                                 })
@@ -104,14 +105,76 @@ class Sjk extends Component{
 }
 const mapStateToProps = (state) => {
     return {
-        sjk_right:state.vars.sjk_right
+        sjk_right:state.vars.sjk_right,
+        headerOptionsID : state.vars.headerOptionsID,//默认ID
+        sjkList : state.vars.sjkList,
+        sjk_slowSql : state.vars.sjk_slowSql,
+        sjk_top : state.vars.sjk_top,
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-    	willMount:()=>{
-    		
+    	willMount:(headerOptionsID)=>{
+    		let obj1={//数据库一览
+                type: 'get',
+                url: 'apm/dbOverview.pinpoint' ,
+                data: 'appId='+headerOptionsID,
+                dataType: 'json'
+            };
+            ajax(obj1,callback1);
+            function callback1(data){
+                console.log('数据库一览',data)
+                dispatch(actions.setVars('sjkList',data.objectList))
+            }
+
+            let obj2={//top5堆叠
+                type: 'get',
+                url: 'apm/topNExpensiveSql.pinpoint' ,
+                data: 'appId='+headerOptionsID,
+                dataType: 'json'
+            };
+            ajax(obj2,callback2);
+            function callback2(data){
+                console.log('top5堆叠',data);
+                let sjk_top={
+                    tranName:[],
+                    maxTime:[],
+                    minTime:[],
+                    avgTime:[]
+                }
+                for(let i=0;i<data.objectList.length;i++){
+                    sjk_top.tranName.push(data.objectList[i].dataBaseSqlViewVO.rpc);
+                    sjk_top.maxTime.push(data.objectList[i].maxTime);
+                    sjk_top.minTime.push(Number(data.objectList[i].minTime));
+                    sjk_top.avgTime.push(Number(data.objectList[i].avgTime));
+                }
+                dispatch(actions.setVars('sjk_top',sjk_top))
+            }
+
+            let obj3={//慢sql列表
+                type: 'get',
+                url: 'apm/traceExpensiveSql.pinpoint' ,
+                data: 'appId='+headerOptionsID,
+                dataType: 'json'
+            };
+            ajax(obj3,callback3);
+            function callback3(data){
+                console.log('慢sql列表',data)
+                dispatch(actions.setVars('sjk_slowSql',data.objectList))
+            }
+
+            let obj4={//数据库响应时间曲线
+                type: 'get',
+                url: 'apm/databaseResponse.pinpoint' ,
+                data: 'appId='+headerOptionsID+'&sqlCount=100',//加下拉框
+                dataType: 'json'
+            };
+            ajax(obj4,callback4);
+            function callback4(data){
+                console.log('数据库响应时间曲线',data)
+                //dispatch(actions.setVars('sjkList',data.objectList))
+            }
     	},
     	init:()=>{
     		let height=$('#sjk').css('height');
@@ -120,8 +183,9 @@ const mapDispatchToProps = (dispatch) => {
         showAdd:()=>{
             dispatch(actions.setVars('addInstrument',true))
         },
-        showRight:()=>{
-            dispatch(actions.setVars('sjk_right',true))
+        showRight:(id)=>{
+            dispatch(actions.setVars('sjk_right',true));
+            dispatch(actions.setVars('sjk_sqlId',id));
         }
     }
 };

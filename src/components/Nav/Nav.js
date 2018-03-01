@@ -7,6 +7,7 @@ import NewPanel from 'pages/Overview/NewPanel';
 import AlertBox from 'pages/functionalCom/alertbox.js';
 import AddInstrument from 'pages/functionalCom/addInstrument.js';
 import Confirm from 'pages/functionalCom/confirm.js';
+import SlowTransition from 'pages/Application/SlowTransiction.js';
 import config from './config.js';
  
 class Nav extends Component{
@@ -21,13 +22,14 @@ class Nav extends Component{
         $('#firstTree').find('li').eq(key).siblings().find('a').css('color','#666666');
     }
     render() {
-        let {alertFlag=false,addInstrument=false,confirm=false}=this.props;
+        let {alertFlag=false,addInstrument=false,confirm=false,slowTransition=false}=this.props;
         return (
             <div className='bodyHeader'>
                 <NewPanel></NewPanel>
                 {alertFlag && <AlertBox />}
                 {addInstrument && <AddInstrument />}
                 {confirm && <Confirm/>}
+                {slowTransition && <SlowTransition />}
                 <div className='bg'>Logo</div>
                 <ul className='firstTree' id='firstTree'>
                 {
@@ -48,6 +50,8 @@ const mapStateToProps = (state) => {
     return {
         addInstrument:state.vars.addInstrument,
         confirm:state.vars.confirm,
+        slowTransition:state.vars.slowTransition,
+        alarmFlag:state.vars.alarmFlag,
     }
 };
 
@@ -58,7 +62,7 @@ const mapDispatchToProps = (dispatch) => {
         },
         willMount:()=>{
             
-        },
+        }
     }
 };
 

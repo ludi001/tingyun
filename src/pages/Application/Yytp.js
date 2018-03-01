@@ -5,17 +5,19 @@ import actions from 'actions';
 import 'pages/Application/yytp.css';
 import Header from 'pages/functionalCom/Header.js';
 import data from './data.js';
+import myAjax from 'pages/functionalCom/myAjax.js';
+const ajax=myAjax.myAjax;
 
 class Yytp extends Component{  
 	componentWillMount() {
-        this.props.willMount();
+        this.props.willMount(this.props.headerOptionsID);
     }
     componentDidMount() {
         this.props.init();
     }
     
     render() {
-    	let {yytp_page='image',yytp_showImg,yytp_showTab}=this.props;
+    	let {yytpTable,yytp_page='image',yytp_showImg,yytp_showTab}=this.props;
         return (
             <div className='yytp'>
                 <Header headerFlag={true} optionData={'more'}/>
@@ -40,17 +42,19 @@ class Yytp extends Component{
                                         <th>被调用者</th>
                                         <th>调用者类型</th>
                                         <th>被调用者类型</th>
+                                        <th>调用次数</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {
-                                        data.data.yytp && data.data.yytp.map((value)=>{
+                                        yytpTable && yytpTable.map((value)=>{
                                             return(
-                                                <tr key={value.caller}>
-                                                    <td>{value.caller}</td>
-                                                    <td>{value.callee}</td>
-                                                    <td>{value.protocol}</td>
-                                                    <td>{value.time}</td>
+                                                <tr key={value.callerMap.calleeAppId}>
+                                                    <td>{value.apperName}</td>
+                                                    <td>{value.appeeName}</td>
+                                                    <td>{value.apperType}</td>
+                                                    <td>{value.appeeType}</td>
+                                                    <td>{value.callTimes}</td>
                                                 </tr>
                                             )
                                         })
@@ -68,14 +72,26 @@ class Yytp extends Component{
 }
 const mapStateToProps = (state) => {
     return {
-        yytp_page:state.vars.yytp_page,
+        yytp_page : state.vars.yytp_page,
+        yytpTable : state.vars.yytpTable,
+        headerOptionsID : state.vars.headerOptionsID,//默认ID
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-    	willMount:()=>{
-    		console.log('willMount')
+    	willMount:(headerOptionsID)=>{
+    		let obj1={
+                type: 'get',
+                url: 'apm/topologyInfo.pinpoint' ,
+                data: 'appId='+headerOptionsID ,
+                dataType: 'json'
+            };
+            ajax(obj1,callback1);
+            function callback1(data){
+                console.log(data)
+                dispatch(actions.setVars('yytpTable',data.objectList))
+            }
     	},
     	init:()=>{
     		console.log('init')

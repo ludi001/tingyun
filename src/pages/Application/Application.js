@@ -62,13 +62,13 @@ class Application extends Component {
                         <Route path="/server/application/htrw" component={createComponent(Htrw)}/>
                         <Route path="/server/application/mq" component={createComponent(MQ)}/>
                         <Route path="/server/application/nosql" component={createComponent(NoSQL)}/>
-                        <Route exact path="/server/application/qbhz" component={createComponent(Qbhz)}/>
+                        <Route path="/server/application/qbhz" component={createComponent(Qbhz)}/>
                         <Route path="/server/application/sjk" component={createComponent(Sjk)}/>
                         <Route path="/server/application/sw" component={createComponent(Sw)}/>
                         <Route path="/server/application/wbyy" component={createComponent(Wbyy)}/>
                         <Route path="/server/application/xcpx" component={createComponent(Xcpx)}/>
                         <Route path="/server/application/yyhj" component={createComponent(Yyhj)}/>
-                        <Route path="/server/application/yytp" component={createComponent(Yytp)}/>
+                        <Route path="/server/application/yytp" component={createComponent(Yytp)}/>                        
                         <Route component={createComponent(NotFound)}/>
                     </Switch>
                 </div>

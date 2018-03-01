@@ -1,0 +1,72 @@
+.jstd_title{
+	height: 40px;
+}
+.jstd_title .jstd_title_left{
+	float: left;
+	margin-left: 10%;
+	height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    color: #222222;
+    font-family: Microsoft YaHei;
+}
+.jstd_title .jstd_title_left input{
+	height: 30px;
+	border: 1px solid #d3d3d3;
+	margin-left: 15px;
+	border-radius: 10px;
+}
+.jstd_title .jstd_title_right{
+	float: right;
+	margin-right: 10%;
+	cursor: pointer;
+	padding: 0 13px 0 13px;
+    width: auto;
+    height: 35px;
+    line-height: 35px;
+    font-size: 15px;
+    color: #ffffff;
+    background: #dd301b;
+}
+.jstd_title_right:hover{
+	background: #1890ff;
+}
+.jstd_table{
+	width: 80%;
+	margin-left: 10%;
+}
+.jstd_table thead tr th{
+	border: 1px solid #d3d3d3;
+	padding-left: 10px;
+	height: 45px;
+    background: #f7f7f7;
+    color: #222222;
+    font-size: 14px;
+    font-family: Microsoft YaHei;
+}
+.jstd_table tbody tr td{
+	border: 1px solid #d3d3d3;
+	padding-left: 10px;
+	height: 55px;
+}
+td.jstd_operation{
+	padding-right: 10px; 
+	text-align: center;
+	font-size: 16px;
+}
+td.jstd_operation i{
+	margin-right: 10px;
+	cursor: pointer;
+}
+.jstd_edit_box{
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content:center;
+	align-items:center;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(51,51,51,0.3);	
+	z-index: 99;
+}

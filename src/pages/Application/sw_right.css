@@ -57,7 +57,7 @@
     margin-bottom: 10px;
     border: 1px solid #ddd;
     overflow: hidden;
-    min-height: 650px;
+    min-height: 550px;
 }
 .sw_content_right_block_chart .back{
 	color: #fff;
@@ -78,4 +78,14 @@
     color: #666666;
     font-weight: normal;
     line-height: 30px;
+}
+.sw_content_right_block_chart table tbody tr td{
+    font-weight: normal;
+    line-height: 36px;
+    height: 36px;
+    border-bottom: #ddd 1px solid;
+    padding-left: 10px;
+}
+.sw_content_right_block_chart table tbody tr:nth-child(even){
+    background-color: #f6f6f6;
 }

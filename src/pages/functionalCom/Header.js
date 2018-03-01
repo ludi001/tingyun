@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import actions from 'actions';
 import 'pages/functionalCom/header.css';
 import TimeDrag from 'pages/functionalCom/timeDrag.js';
+import myAjax from 'pages/functionalCom/myAjax.js';
+const ajax=myAjax.myAjax;
 import { DatePicker, Select, Icon } from 'antd';
 const { RangePicker } = DatePicker;
 const Option = Select.Option;
@@ -22,7 +24,7 @@ class Header extends Component{
         console.log('onOk: ', value);
     }
     render() {
-    	let {handleChange,headerFlag,optionData,slide,slideFlag='left',showSlide,showSlideFlag=false}=this.props;
+    	let {headerOptions,handleChange,headerFlag,optionData,slide,slideFlag='left',showSlide,showSlideFlag=false}=this.props;
         return (
             <div>
                 <div className='second_header'>
@@ -30,16 +32,18 @@ class Header extends Component{
                         optionData=='more' && <Select
                             showSearch
                             style={{ width: 200 }}
-                            placeholder="PHP Aplication"
+                            placeholder={headerOptions && headerOptions[0].applicationName}
                             onChange={handleChange}
                             optionFilterProp="children"
                             filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                           >
-                            <Option value="PHP Aplication">PHP Aplication</Option>
-                            <Option value="Welcome to Tomcat">Welcome to Tomcat</Option>
-                            <Option value="java_demo">java_demo</Option>
-                            <Option value="fvt_php_49">fvt_php_49</Option>
-                            <Option value="java_consumer">java_consumer</Option>
+                        {
+                            headerOptions && headerOptions.map((value)=>{
+                                return(
+                                    <Option key={value.id} value={value.id}>{value.applicationName}</Option>
+                                )
+                            })
+                        }
                         </Select>
                     }
                     {
@@ -97,14 +101,26 @@ class Header extends Component{
 const mapStateToProps = (state) => {
     return {
         slideFlag:state.vars.slideFlag,
-        showSlideFlag:state.vars.showSlideFlag
+        showSlideFlag:state.vars.showSlideFlag,
+        headerOptions:state.vars.headerOptions,
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
     	willMount:()=>{
-    		
+    		let obj={
+                type: 'get',
+                url: 'apm/apmApplications.pinpoint' ,
+                data: '' ,
+                dataType: 'json'
+            };
+            ajax(obj,callback);
+            function callback(data){
+                console.log('headerOptions',data)
+                dispatch(actions.setVars('headerOptions',data.objectList));
+                dispatch(actions.setVars('headerOptionsID',data.objectList[0].id));//默认选中ID
+            }
     	},
     	init:()=>{
     		

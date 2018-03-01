@@ -4,6 +4,8 @@ var Highcharts = require('react-highcharts');
 		
 class SwPie extends Component{
 	render() {
+		let {sw_pieData}=this.props;
+		console.log('sw_pieData',sw_pieData)
     	let configPie = {
             chart: {
 	            height:300,
@@ -26,8 +28,12 @@ class SwPie extends Component{
          //        },
 	        // },
 	        tooltip: {//hover提示框
-	            headerFormat: '{series.name}<br>',
-            	pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>'
+	            //headerFormat: '{series.name}<br>',
+            	//pointFormat: '{point.name}: <b>{point.percentage:.1f}%</b>',
+            	useHTML: true, //是否使用HTML编辑提示信息
+	            headerFormat: '<small>{point.name}</small><table>',
+	            pointFormat: '<tr><td>{point.name}: </td><td><b>{point.y}</b></td></tr> <tr><td>averageTime: </td><td><b>{point.averageTime}</b></td></tr> <tr><td>maxTime: </td><td><b>{point.maxTime}</b></td></tr> <tr><td>minTime: </td><td><b>{point.minTime}</b></td></tr>',
+	            footerFormat: '</table>',
 	        },
 	        credits: {
 	            enabled: false //不显示highCharts版权信息
@@ -44,20 +50,7 @@ class SwPie extends Component{
 	        },
 	        series: [{
 	            type: 'pie',
-	            name: '访问量占比',
-	            data: [
-	                ['Firefox',   45.0],
-	                ['IE',       26.8],
-	                {
-	                    name: 'Chrome',
-	                    y: 12.8,
-	                    sliced: true,
-	                    selected: true
-	                },
-	                ['Safari',    8.5],
-	                ['Opera',     6.2],
-	                ['其他',   0.7]
-	            ]
+	            data: sw_pieData
 	        }]
         }
         return (
